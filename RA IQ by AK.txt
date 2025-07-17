@@ -1,0 +1,48 @@
+1.	How do you perform a GET request using REST Assured?
+2.	How to pass query parameters in REST Assured?
+3.	How do you send a POST request with a JSON body?
+4.	How do you validate a list in the response and extract a value from it?
+5.	How do you create a reusable request specification?
+6.	How do you chain multiple API calls?
+7.	How do you test file upload/download with REST Assured?
+8.	How do you build a dynamic payload in REST Assured?
+9.	How do you retry a failed API call automatically (exponential backoff or polling)?
+10.	How do you compare JSON response from REST Assured with an expected JSON file?
+11.	How do you handle parameterized JSON payloads using POJO classes and Jackson?
+12.	How do you extract nested values like data[0].user.profile.email from a JSON array response?
+13.	How do you write a test to validate pagination logic across multiple pages?
+14.	How do you mock an endpoint locally using WireMock for REST Assured testing?
+15.	How to test an asynchronous API call?
+16.	How to trigger 403 Forbidden in API tests?
+17.	How to perform JSON Schema validation in API tests?
+18.	How do you implement dynamic logging in your REST Assured framework?
+19.	How would you test a secured REST API that uses OAuth2 for authorization using REST Assured?
+20.	How do you write parameterized tests using REST Assured and TestNG?
+21.	Can you tell the disadvantages of RESTful web services?
+22.	What is the concept of statelessness in REST?
+23.	What are the features of RESTful Web Services?
+24.	How do you add REST Assured to a project?
+25.	How do you send GET requests using REST Assured?
+26.	How do you validate a response using REST Assured?
+27.	What is JSONPath in REST Assured?
+28.	How do you extract data using JSONPath with REST Assured?
+29.	How do you send POST requests using REST Assured?
+30.	How do you send PUT and DELETE requests with REST Assured?
+31.	What are Request Specifications in REST Assured?
+32.	How do you authenticate using REST Assured?
+33.	What is BDD in REST Assured?
+34.	How do you perform query parameter validation in REST Assured?
+35.	What is Response Specification in REST Assured?
+36.	How do you use Response Specification in REST Assured?
+37.	How do you handle timeouts in REST Assured?
+38.	What is the "RootPath" feature in REST Assured?
+39.	How do you handle SSL in REST Assured?
+40.	What is "log()" in REST Assured?
+41.	How do you set headers in REST Assured?
+42.	What is the difference between "given()", "when()", and "then()" in REST Assured?
+43.	What is BDD in REST Assured? (Duplicate question)
+44.	How can you effectively manage dynamic values, such as timestamps, when validating responses using REST Assured?
+45.	How can you validate a numeric response using REST Assured?
+46.	How does REST Assured handle Unicode characters when testing APIs?
+47.	Describe how to perform HEAD requests using REST Assured?
+48.	Describe how to extract response time information from a response using REST Assured?
