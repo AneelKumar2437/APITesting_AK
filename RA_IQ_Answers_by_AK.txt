@@ -1,0 +1,83 @@
+
+1. How do you perform a GET request using REST Assured?
+```java
+given().when().get("https://api.example.com/data").then().statusCode(200);
+```
+
+2. How to pass query parameters in REST Assured?
+```java
+given().queryParam("key", "value").when().get("/endpoint").then().statusCode(200);
+```
+
+3. How do you send a POST request with a JSON body?
+```java
+given()
+    .header("Content-Type", "application/json")
+    .body("{"name":"John"}")
+.when()
+    .post("/create")
+.then()
+    .statusCode(201);
+```
+
+4. How do you validate a list in the response and extract a value from it?
+```java
+List<String> names = given().get("/users")
+    .then().extract().path("data.name");
+```
+
+5. How do you create a reusable request specification?
+```java
+RequestSpecification requestSpec = new RequestSpecBuilder()
+    .setBaseUri("https://api.example.com")
+    .addHeader("Authorization", "Bearer token")
+    .build();
+```
+
+6. How do you chain multiple API calls?
+```java
+String userId = given().get("/users").then().extract().path("id[0]");
+
+given().pathParam("id", userId)
+    .get("/users/{id}/details")
+    .then().statusCode(200);
+```
+
+7. How do you test file upload/download with REST Assured?
+**Upload:**
+```java
+given().multiPart("file", new File("file.txt"))
+    .post("/upload")
+    .then().statusCode(200);
+```
+**Download:**
+```java
+byte[] file = given().get("/download/file.txt").asByteArray();
+```
+
+8. How do you build a dynamic payload in REST Assured?
+```java
+Map<String, Object> payload = new HashMap<>();
+payload.put("name", "John");
+payload.put("age", 30);
+
+given().body(payload).post("/create");
+```
+
+9. How do you retry a failed API call automatically?
+Use custom retry logic:
+```java
+int retry = 3;
+for (int i = 0; i < retry; i++) {
+    Response response = given().get("/status");
+    if (response.getStatusCode() == 200) break;
+    Thread.sleep(1000 * (i + 1)); // Exponential backoff
+}
+```
+
+10. How do you compare JSON response with an expected JSON file?
+```java
+String expected = new String(Files.readAllBytes(Paths.get("expected.json")));
+given().get("/endpoint")
+    .then().body(equalToJson(expected));
+```
