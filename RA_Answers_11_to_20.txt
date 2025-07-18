@@ -1,0 +1,150 @@
+
+11. How do you handle parameterized JSON payloads using POJO classes and Jackson?
+You can define a POJO (Plain Old Java Object) class matching your JSON structure, use setters to populate it dynamically, and serialize it using Jackson.
+Example:
+public class User {
+    private String name;
+    private int age;
+    // Getters and Setters
+}
+User user = new User();
+user.setName("Aneel");
+user.setAge(30);
+
+given()
+    .contentType("application/json")
+    .body(user)
+.when()
+    .post("/users")
+.then()
+    .statusCode(201);
+
+12. How do you extract nested values like data[0].user.profile.email from a JSON array response?
+Use JSONPath to navigate and extract nested values.
+Example:
+String email = given()
+    .when()
+    .get("/users")
+    .then()
+    .extract()
+    .path("data[0].user.profile.email");
+
+13. How do you write a test to validate pagination logic across multiple pages?
+You loop through pages and validate response structure or values.
+Example:
+int page = 1;
+while (true) {
+    Response response = given()
+        .queryParam("page", page)
+        .when()
+        .get("/items");
+
+    List<String> items = response.jsonPath().getList("data");
+    if (items.isEmpty()) break;
+
+    response.then().statusCode(200);
+    page++;
+}
+
+14. How do you mock an endpoint locally using WireMock for REST Assured testing?
+Use WireMockServer to simulate responses.
+Example:
+WireMockServer wireMockServer = new WireMockServer(8080);
+wireMockServer.start();
+
+stubFor(get(urlEqualTo("/mock"))
+    .willReturn(aResponse()
+    .withStatus(200)
+    .withBody("{"message": "Mocked!"}")));
+
+given()
+    .when()
+    .get("http://localhost:8080/mock")
+    .then()
+    .statusCode(200)
+    .body("message", equalTo("Mocked!"));
+
+wireMockServer.stop();
+
+15. How to test an asynchronous API call?
+Use polling or delay logic until a status or condition is met.
+Example:
+String jobId = given().post("/start-job").jsonPath().getString("jobId");
+
+await().atMost(30, TimeUnit.SECONDS).until(() -> {
+    Response response = given().get("/job-status/" + jobId);
+    return response.jsonPath().getString("status").equals("completed");
+});
+
+16. How to trigger 403 Forbidden in API tests?
+Send a request without proper authorization.
+Example:
+given()
+    .header("Authorization", "Bearer invalidToken")
+.when()
+    .get("/secure-data")
+.then()
+    .statusCode(403);
+
+17. How to perform JSON Schema validation in API tests?
+Use JsonSchemaValidator.
+Example:
+given()
+    .when()
+    .get("/user")
+.then()
+    .assertThat()
+    .body(matchesJsonSchemaInClasspath("user_schema.json"));
+
+18. How do you implement dynamic logging in your REST Assured framework?
+Use .log() conditionally or globally using filters().
+Example:
+given()
+    .log().ifValidationFails()
+    .when()
+    .get("/endpoint")
+    .then()
+    .statusCode(200);
+
+19. How would you test a secured REST API that uses OAuth2 for authorization using REST Assured?
+You first obtain a token and use it in the header.
+Example:
+String token = given()
+    .formParam("client_id", "abc")
+    .formParam("client_secret", "xyz")
+    .formParam("grant_type", "client_credentials")
+    .post("/oauth/token")
+    .jsonPath().getString("access_token");
+
+given()
+    .auth().oauth2(token)
+    .when()
+    .get("/secure-api")
+    .then()
+    .statusCode(200);
+
+20. How do you write parameterized tests using REST Assured and TestNG?
+Use @DataProvider to pass multiple test data sets.
+Example:
+@DataProvider(name = "userData")
+public Object[][] userData() {
+    return new Object[][] {
+        {"Aneel", 30},
+        {"Sara", 25}
+    };
+}
+
+@Test(dataProvider = "userData")
+public void testUserCreation(String name, int age) {
+    Map<String, Object> user = new HashMap<>();
+    user.put("name", name);
+    user.put("age", age);
+
+    given()
+        .contentType("application/json")
+        .body(user)
+    .when()
+        .post("/users")
+    .then()
+        .statusCode(201);
+}
